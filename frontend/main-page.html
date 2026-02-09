@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <!-- Axios CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+        
+    <link rel="stylesheet" href="styles/normalize.css">
+    <link rel="stylesheet" href="styles/global.css">
+    <link rel="stylesheet" href="styles/main-page-style/profile-card.css">
+    <link rel="stylesheet" href="styles/main-page-style/about-section.css">
+    <link rel="stylesheet" href="styles/main-page-style/experience-section.css">
+    <link rel="stylesheet" href="styles/main-page-style/project-section.css">
+    <link rel="stylesheet" href="styles/main-page-style/education-section.css">
+    <link rel="stylesheet" href="styles/main-page-style/tools-section.css">
+    <link rel="stylesheet" href="styles/main-page-style/contact-section.css">
+    <link rel="stylesheet" href="styles/main-page-style/form.css">
+    <link rel="stylesheet" href="styles/loading.css">
+    <link rel="stylesheet" href="styles/popup-alert.css">
+
+    <title>Editable Portfolio Website</title>
+  </head>
+  <body>
+    <!-- ===== FORM / MAIN WRAPPER ===== -->
+    <div class="main-wrapper view-mode">
+      <button class="button-enable-edit" type="button">Edit</button>
+      <button class="save-btn hide" type="submit">Save</button>
+
+      <!-- ================================ -->
+      <!-- PROFILE CARD -->
+      <!-- ================================ -->
+      <div class="profile-card with-image-content" id="profile-card">
+        <!-- <div class="profile-card__img-container">
+          <input type="file" id="profileImageInput" accept="image/*" hidden>
+          <label for="profileImageInput" class="profile-card__img-container--input-icon" title="Upload-Image">
+            <i class="fa-solid fa-camera"></i>
+          </label>
+
+          <img class="profile-card__image" src="images-and-icons/meowish profile.jpeg" alt="profile-image">
+        </div>
+        
+        <div class="profile-card__details">
+          <select name="select-work-availability" id="select-work-availability">
+            <option value="">Select Work Availabilty</option>
+            <option value="available">Available for work</option>
+            <option value="unavailable">Unavailable for work</option>
+          </select>
+
+          <div class="work-availability">
+            <span class="work-availability__dot-status active"></span>
+            <p class="work-availability__label">Available for work</p>
+          </div>
+
+          <div class="profile-card__name editable-text" data-target="name-input"> John Harvey </div>
+          <input type="hidden" name="name-input" id="name-input">
+
+          <div class="social-list-inputs">
+            <input class="instagram-input-link" type="text" placeholder="Enter instagram link">
+            <input class="tiktok-input-link" type="text" placeholder="Enter tiktok link">
+            <input class="youtube-input-link" type="text" placeholder="Enter youtube link">
+            <input class="facebook-input-link" type="text" placeholder="Enter facebook link">
+          </div>
+
+          <div class="profile-card__social-list">
+            <a href="#" class="profile-card__social-list--img">
+              <img class="profile-card__social-list--img-icon" src="images-and-icons/instagram.png" alt="instagram-img">
+            </a>
+            <a href="#" class="profile-card__social-list--img">
+              <img class="profile-card__social-list--img-icon" src="images-and-icons/tiktok.png" alt="tiktok-icon">
+            </a>
+            <a href="#" class="profile-card__social-list--img">
+              <img class="profile-card__social-list--img-icon" src="images-and-icons/youtube.png" alt="youtube-icon">
+            </a>
+            <a href="#" class="profile-card__social-list--img"> 
+              <img class="profile-card__social-list--img-icon" src="images-and-icons/facebook.png" alt="facebook-icon">
+            </a>
+          </div>
+
+          <div class="profile-card__buttons-container">
+              <input id="CV-upload" type="file" type="file" accept=".pdf,.doc,.docx" hidden>
+              <label for="CV-upload" class="profile-card__btn upload-cv-btn" title="Upload-CV">
+                <i class="fa-solid fa-upload"></i>
+                <span class="profile-card__btn--label">Upload CV</span>
+              </label>
+              
+            <a href="images-and-icons/contact-icon.png" download class="profile-card__btn download-cv-btn">
+              <i class="profile-card__btn--icon fas fa-download"></i>
+              <p class="profile-card__btn--label">Download CV</p>
+            </a>
+            
+            <a href="#contact-section" class="profile-card__btn contact-me-btn">
+              <img class="profile-card__btn--icon" src="images-and-icons/contact-icon.png" alt="contact-icon">
+              <p class="profile-card__btn--label">Contact Me</p>
+            </a>
+          </div>
+        </div> -->
+      </div>
+      
+      <div class="sections-container">
+        <!-- ================================ -->
+        <!-- ABOUT SECTION -->
+        <!-- ================================ -->
+        <section id="about-section"> </section>
+
+        <!-- ================================ -->
+        <!-- EXPERIENCE SECTION -->
+        <!-- ================================ -->
+        <section id="experience-section">
+           <div class="section-label"> <!-- section label -->
+            <img class="section-label--icon" src="images-and-icons/bag-icon.png" alt="experience-icon"></img>
+            <p class="section-label--txt">Experience</p>
+          </div>
+
+          <div class="experience-cards-list"><!-- Contents is displayed in display-content.js --></div>
+        </section>
+
+        <!-- ================================ -->
+        <!-- PROJECTS SECTION -->
+        <!-- ================================ -->
+        <section id="projects-section">
+          <div class="section-label">
+            <img class="section-label--icon" src="images-and-icons/projects-icon.png" alt="experience-icon"></img>
+            <p class="section-label--txt">Projects</p>
+          </div>
+
+          <!-- Projects list container -->
+          <div class="projects-card-container">
+            <!-- projects list -->
+            <div class="project-list"><!-- Contents displayed in display-content.js --></div> 
+
+            <button class="projects-card-container__load-more-btn" type="button">Load More</button>
+
+             <!-- more projects list -->
+            <div class="more-projects-list hide"><!-- Contents Display in display-content.js --></div>
+          </div>
+        </section>
+
+        <!-- ================================ -->
+        <!-- EDUCATION SECTION -->
+        <!-- ================================ -->
+        <section id="education-section">
+          <div class="section-label">
+            <img class="section-label--icon" src="images-and-icons/graduation-cap.png" alt="experience-icon"></img>
+            <p class="section-label--txt">Education</p>
+          </div>
+
+          <div class="education-card-list"><!-- Contents displayed in display-content.js --></div>
+        </section>
+
+        <!-- ================================ -->
+        <!-- TOOLS SECTION -->
+        <!-- ================================ -->
+        <section id="tools-section">
+          <div class="section-label">
+            <img class="section-label--icon" src="images-and-icons/tools-icon.png" alt="experience-icon"></img>
+            <p class="section-label--txt">Tools</p>
+          </div>
+
+          <div class="tools-card-list"><!-- Contents is render in display-contents.js --></div>
+        </section>
+
+        <!-- ================================ -->
+        <!-- CONTACT SECTION -->
+        <!-- ================================ -->
+        <section id="contact-section">
+          <div class="section-label">
+            <img class="section-label--icon" src="images-and-icons/contact-icon.png" alt="experience-icon"></img>
+            <p class="section-label--txt">Contact</p>
+          </div>
+
+          <div class="contact-section-content">
+            <!-- contact card list -->
+            <div class="contact-card-list"><!-- Contact Cards is render in display-contents.js --></div>
+
+            <!-- email form -->
+            <form id="email-form">
+              <input class="email-form__input" id="email-form__name-input" type="text" placeholder="Full Name" required>
+              <input class="email-form__input" id="email-form__email-input" type="email" placeholder="Email" required>
+              <textarea class="email-form__input" id="email-form__message-input" name="message" placeholder="Message"></textarea>
+              <button id="email-form__submit-btn" type="submit">Send Message</button>
+            </form>
+
+            <!-- <div class="email-form-required-data-container">
+              <p class="email-form-required-data-container__instruction">
+                To enable the email form, please enter your SendGrid API Key.<br>
+                Need help generating one? Watch this short tutorial:
+                <a
+                  class="email-form-required-data-container__instruction--video-link"
+                  href="https://youtu.be/pNBUUoLIDSA?si=I44Q99VthigSQVQA"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Watch Tutorial
+                </a>
+              </p>
+              <input id="sendgrid-api-key" type="text" placeholder="Enter your SendGrid API Key">
+            </div> -->
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ===== Blur Background ===== -->
+    <div class="blur-bg hide"></div>
+
+    <!-- ===== Starting Page Loading ===== -->
+    <div id="starting-loading" class="hide">
+      <div>G</div>
+      <div>N</div>
+      <div>I</div>
+      <div>D</div>
+      <div>A</div>
+      <div>O</div>
+      <div>L</div>
+    </div>
+
+    <!-- ===== Loading ===== -->
+    <div class="loading-container hide">
+      <div class="loader">
+        <svg class="circular-loader"viewBox="25 25 50 50" >
+          <circle class="loader-path" cx="50" cy="50" r="20" fill="none" stroke="#70c542" stroke-width="2" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- ===== SUCCESS POPUP===== -->
+    <div class="popup-alert popup-success hide">
+      <i class="fa-solid fa-check popup-alert__icon"></i>
+
+      <p class="popup-alert__result">SUCCESS</p>
+      <p class="popup-alert__details"></p>
+
+      <button class="popup-alert__button" type="button">Okay</button>
+    </div>
+
+    <!-- ===== ERROR POPUP===== -->
+    <div class="popup-alert popup-error hide">
+      <i class="fa-solid fa-xmark popup-alert__icon"></i>
+
+      <p class="popup-alert__result">ERROR</p>
+      <p class="popup-alert__details"></p>
+
+      <button class="popup-alert__button" type="button">Okay</button>
+    </div>  
+
+    <!-- ===== LOGIN FORM ===== -->
+    <form class="login-form auth-form hide" id="login-form">
+      <i class="form__cancel-btn fa-solid fa-xmark"></i>
+      <h1 class="login-form__heading form-heading">Login to Edit</h1>
+
+      <div class="login-form__email">
+        <label class="login-form__input-label form__input-label">Email</label>
+        <input type="email" id="email-input" required>
+      </div>
+      <div class="login-form__password">
+        <label class="login-form__input-label form__input-label">Password</label>
+          <div class="password-wrapper">
+            <input type="password" id="password-input" required>
+            <i class="toggle-password-icon fa-solid fa-eye"></i>
+          </div>
+      </div>
+      <button id="login-form__submit-btn" type="submit">Submit</button>
+      
+      <p class="login-form__forgot-password"> <u>Forgot Password?</u></p>
+    </form>
+
+    <!-- ===== OTP FORM ===== -->
+    <form class="otp-form auth-form hide" id="otp-form">
+      <i class="form__cancel-btn fa-solid fa-xmark"></i>
+      <h1 class="otp-form__heading form-heading">Please enter the OTP we sent to your email</h1>
+
+      <div class="otp-form__inputs">
+        <input type="text" inputmode="numeric" maxlength="1" class="otp-form__input" required>
+        <input type="text" inputmode="numeric" maxlength="1" class="otp-form__input" required>
+        <input type="text" inputmode="numeric" maxlength="1" class="otp-form__input" required>
+        <input type="text" inputmode="numeric" maxlength="1" class="otp-form__input" required>
+        <input type="text" inputmode="numeric" maxlength="1" class="otp-form__input" required>
+        <input type="text" inputmode="numeric" maxlength="1" class="otp-form__input" required>
+      </div>
+
+      <button type="submit" class="otp-form__submit-btn">Submit</button>
+
+      <p class="otp-form__resend">
+        Didn’t get the code? <u class="otp-form__resend-otp">Resend OTP</u>
+      </p>
+    </form>
+
+    <!-- ===== RESET PASSWORD FORM ===== -->
+    <form class="reset-password-form auth-form hide" id="reset-password-form">
+      <h1 class="reset-password-form__heading form-heading">Reset Password</h1>
+
+      <div class="reset-password-form__new-password">
+        <label class="reset-password-form__input-label form__input-label">New Password</label>
+        <div class="password-wrapper">
+            <input type="password" id="new-password-input" required>
+            <i class="toggle-password-icon fa-solid fa-eye"></i>
+        </div>
+      </div>
+
+      <div class="reset-password-form__re-enter-password">
+        <label class="reset-password-form__input-label form__input-label">New Password</label>
+        <div class="password-wrapper">
+          <input type="password" id="re-enter-password" required>
+          <i class="toggle-password-icon fa-solid fa-eye"></i>
+        </div>
+      </div>
+
+      <button id="reset-password-form__submit-btn">Submit</button>
+      <p class="reset-password-form__back-to-login-form">
+        <i class="fa fa-long-arrow-left"></i> 
+        Back to login?
+      </p>
+    </form>
+
+    <script type="module" src="./scripts/Main-script.js"></script>
+  </body>
+</html>

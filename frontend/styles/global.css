@@ -1,0 +1,304 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
+:root{
+  --accent-color: rgb(40, 233, 140);
+  --bg-color: #000000;
+  --box-bg: rgb(16, 16, 16);
+  --box-border-clr: rgb(48, 48, 48);
+  --text-color: white;
+  --text-color-2: rgb(190, 190, 190);
+
+  --available-txt-size: 16px;
+  --name-txt-size: clamp(24px, 7vw, 28px);
+  --dlcv-and-contact-txt-size: clamp(13px, 3.5vw, 14px);
+
+  --section-label-txt-size: clamp(18px, 5vw, 24px);
+  --greetings-and-adress-txt-size: clamp(30px, 5vw, 52px);
+  --skill-txt-size: clamp(30px, 4.7vw, 48px);
+  --about-me-txt-size: 1rem;
+
+  --achivement-number-txt: 30px;
+  --achivement-label-txt: clamp(14px, 4vw, 16px);
+
+  --experience-title-txt: clamp(18px, 4vw, 20px);
+  --experience-company-txt: clamp(13px, 3vw, 14px);
+  --experience-details-and-year-txt: 16px;
+
+  --project-title-txt: clamp(18px, 4.5vw, 24px);
+  --project-details-txt: clamp(13px, 3vw, 14px);
+
+  --education-title-txt: clamp(18px, 10vw, 20px);
+  --education-school-txt: clamp(13px, 10vw, 14px);
+  --education-details-and-year-txt: 16px;
+
+  --tools-name-txt: clamp(18px, 2vw, 20px);
+  --tools-about-txt: clamp(13px, 2vw, 14px);
+
+  --gets-in-touch-txt-size: clamp(24px, 20vw, 28px);
+  --contact-label-txt-size: clamp(13px, 2vw, 14px);
+  --contact-value-txt-size: 16px;
+  --contact-input-txt-size: 16px;
+  --form-btn-txt: clamp(13px, 2vw, 14px);
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+li{
+  list-style: none;
+}
+
+img{
+  width: 100%;
+}
+
+a{
+  text-decoration: none;
+  cursor: pointer;
+  color: black;
+}
+
+button{
+  cursor: pointer;
+}
+
+html{
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  scroll-behavior: smooth;
+}
+
+body{
+  font-family: "Space Grotesk", "Space Grotesk Placeholder", sans-serif;
+  background-color: var(--bg-color);
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+  color: var(--text-color);
+}
+
+body.is-loading {
+  pointer-events: none;
+  -moz-user-select: none;
+       user-select: none;
+  -webkit-user-select: none; 
+  -ms-user-select: none;
+}
+
+/* pero payagan ang loader lang */
+body.is-loading .loading-container {
+  pointer-events: auto;
+}
+
+.blur-bg{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 10;
+}
+
+.blur-bg.hide{
+  display: none;
+}
+
+.main-wrapper{
+  --wrapper-max-width: 1355px;
+  --wrapper-padding: 40px;
+
+  position: relative;
+  width: min(var(--wrapper-max-width), 100% - var(--wrapper-padding));
+  min-height: 100%;
+  margin-inline: auto;
+  padding-top: 70px;
+}
+
+.main-wrapper.hide{
+  display: none;
+}
+
+.button-enable-edit,
+.save-btn{
+  position: absolute;
+  top: 20px;
+  right: 0;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  display: block;
+  padding: 5px 25px;
+  border-radius: 5px;
+  border: none;
+  background-color:var(--accent-color);
+  font-weight: 500;
+  opacity: 0;
+  -webkit-animation: edit-btn-fade-in 1s forwards;
+          animation: edit-btn-fade-in 1s forwards;
+  -webkit-animation-delay: 1.4s;
+          animation-delay: 1.4s;
+}
+
+.save-btn{
+  position: fixed;
+  right: 20px;
+  z-index: 100;
+  background-color:  rgb(0, 160, 83);;
+}
+
+@-webkit-keyframes edit-btn-fade-in{
+  to{
+    opacity: 1;
+  }
+}
+
+@keyframes edit-btn-fade-in{
+  to{
+    opacity: 1;
+  }
+}
+
+.main-wrapper.edit-mode .save-btn,
+.main-wrapper.edit-mode .button-enable-edit{
+  -webkit-animation: none !important;
+          animation: none !important;
+  opacity: 1 !important;
+}
+
+.button-enable-edit.hide,
+.save-btn.hide{
+  display: none;
+}
+
+
+/* .view-mode input:not(.email-form__input),
+.view-mode textarea:not(.email-form__input){
+  pointer-events: none;
+} */
+
+.sections-container{
+  width: 100%;
+}
+
+section{
+  margin-bottom: 85px;
+  width: 100%;
+}
+
+.section-label{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 12px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin-bottom: 22px;
+  font-weight: 500;
+}
+
+.section-label.hide{
+  display: none;
+}
+
+.edit-mode .section-label.hide{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.section-label--icon{
+  --size: 24px;
+
+  height: var(--size);
+  width: var(--size);
+}
+
+.section-label--txt{
+  font-size: var(--section-label-txt-size);
+}
+
+.editable-text{
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.edit-mode .editable-text:hover,
+.edit-mode .editable-text:focus{
+  color: var(--accent-color);
+  -webkit-transition: 0.1s;
+  -o-transition: 0.1s;
+  transition: 0.1s;
+}
+
+.edit-mode .editable-text{
+  border: 1px solid var(--box-border-clr);
+  border-radius: 7px;
+  padding: 3px 10px;
+}
+
+.edit-mode .editable-text:focus{
+  border: 1px solid var(--accent-color);
+  outline: 1px solid var(--accent-color);
+}
+
+.delete-button{
+  cursor: pointer;
+  color: rgba(255, 0, 0, 0.702);
+}
+
+.view-mode .delete-button{
+  display: none;
+}
+.edit-mode .delete-button{
+  display: inline-block;
+}
+
+.add-content-btn{
+  background-color: var(--accent-color);
+  font-weight: 600;
+  border: none;
+}
+
+@media(width >= 43.75em){
+  .sections-container{
+    max-width: 800px;
+  }
+}
+
+@media(width >= 75em){
+  .sections-container{
+    max-width: 100%;
+  }
+  .main-wrapper{
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 0.3fr 70px 1fr;
+    grid-template-columns: 0.3fr 1fr;
+    gap: 70px;
+    padding-top: 50px;
+  }
+}
+
+@media(width >= 87.3125em){
+  .save-btn{
+    right: 60px;
+  }
+}
+

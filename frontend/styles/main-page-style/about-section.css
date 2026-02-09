@@ -1,0 +1,280 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
+.about-section__greetings,
+.about-section__adress{
+  font-size: var(--greetings-and-adress-txt-size);
+  font-weight: 500;
+}
+
+.about-section__skills{
+  font-size: var(--skill-txt-size);
+  color: var(--accent-color);
+  font-weight: 500;
+  margin: 3px 0;
+}
+
+.view-mode .about-section__skills-inputs-list{
+  display: none;
+}
+
+.view-mode .about-section__skill-input--delete-btn{
+  display: none;
+}
+
+.view-mode .about-section__add-skill-btn{
+  display: none;
+}
+
+/* Typing cursor */
+.about-section__skills::after{
+  content: "|";
+  display: inline-block;
+  margin-left: 6px;
+  color: var(--accent-color);
+  -webkit-animation: blink 1s steps(1, start) infinite;
+          animation: blink 1s steps(1, start) infinite;
+  color: white;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+}
+
+@-webkit-keyframes blink{
+  50%{ opacity: 0; }
+}
+
+@keyframes blink{
+  50%{ opacity: 0; }
+}
+
+.about-section__adress{
+  margin-bottom: 20px;
+}
+
+.about-section__adress .editable-text{
+  max-width: -webkit-fit-content;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
+  display: inline;
+}
+
+.about-section__about-me{
+  font-size: var(--about-me-txt-size);
+  margin-bottom: 33px;
+  font-weight: 500;
+  line-height: 1.6em;
+  text-align: left;
+  scrollbar-width: none;
+}
+
+.view-mode .about-section__about-me-input{
+  display: none;
+}
+
+.achievements-list{
+  -ms-flex-line-pack: unset;
+      align-content: unset;
+  -webkit-box-align: unset;
+      -ms-flex-align: unset;
+          align-items: unset;
+  display: -ms-grid;
+  display: grid;
+  gap: 40px;
+  -ms-grid-columns: minmax(0, 1fr) 40px minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.achievements-list__achievement{
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  width: 100%;
+}
+
+.view-mode .achievements-list__achievement--delete-btn{
+  display: none;
+}
+
+.achivements-list__achievement--number-container{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+  gap: 2px;
+  font-weight: 600;
+  font-size: var(--achivement-number-txt);
+  margin-bottom: 12px;
+}
+
+.achivements-list__achievement--number-container .plus-txt{
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.achivements-list__achivement--label{
+  font-size: var(--achivement-label-txt);
+  color: var(--text-color-2);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.view-mode .achievements-list__add-btn{
+  display: none;
+} 
+
+/* ============================================================================
+                                 EDIT MODE
+  ============================================================================= */
+.edit-mode .about-section__greetings{
+  margin-bottom: 25px;
+}
+
+.edit-mode .about-section__skills{
+  display: none !important;
+}
+
+.edit-mode .about-section__skills-inputs-list{
+  display: -ms-grid;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 100%));
+  gap: 16px;
+  margin-bottom: 40px;
+  margin-top: 10px;
+}
+
+.edit-mode .about-section__skill-input{
+  position: relative;
+}
+
+.edit-mode .about-section__skill-input input{
+  height: 100%;
+  width: 100%;
+  color: rgba(255, 255, 255, 0.556);
+}
+
+.edit-mode .about-section__skill-input--delete-btn{
+  font-size: 1.1rem;
+  position: absolute;
+  z-index: 10;
+  top: 0%;
+  right: -10px;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  background: transparent;
+  border: none;
+}
+
+.edit-mode .about-section__add-skill-btn{
+  padding: 8px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.edit-mode .about-section__adress-input{
+  line-height: 1.6em;
+}
+
+.edit-mode .achievements-list{
+  gap: 25px;
+}
+
+.edit-mode .achievements-list__achievement{
+  background-color: rgb(13, 13, 13);
+  border-radius: 6px;
+  padding: 12px 5px;
+  min-width: 0;
+}
+
+.edit-mode .achievements-list__achievement--delete-btn{
+  font-size: 1.3rem;
+  position: absolute;
+  background: transparent;
+  border: none;
+  top: 2px; 
+  right: -13px;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+.edit-mode .achivements-list__achivement--label{
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  padding: 7px 8px;
+}
+
+.edit-mode .achievements-list__add-btn{
+  border-radius: 7px;
+  cursor: pointer;
+  padding: 25px 50px;
+  padding: 25px 20px;
+  text-align: center;
+}
+
+
+@media(width >= 47.1875em){
+  .edit-mode .about-section__skills-inputs-list{
+    grid-template-columns: repeat(auto-fit, minmax(250px, 350px));
+  }
+}
+
+
+
+@media(width >= 50em){
+  .achievements-list{
+    -ms-flex-line-pack: unset;
+        align-content: unset;
+    -webkit-box-align: unset;
+        -ms-flex-align: unset;
+            align-items: unset;
+    display: -ms-grid;
+    display: grid;
+    gap: 40px;
+    -ms-grid-columns: 1fr 40px 1fr 40px 1fr 40px 1fr;
+    grid-template-columns: repeat(4, 1fr);
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+
+  .edit-mode .achievements-list__add-btn{
+    padding: 25px 50px;
+  }
+}
+
+@media(width >= 75em){
+  #about-section{
+    padding-top: 100px;
+  }
+  .achievements-list{
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+  }
+}

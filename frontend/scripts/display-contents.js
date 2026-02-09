@@ -1,0 +1,622 @@
+import {getMainInfoAPI} from "./../api/main-info-api.js"
+import {getSkillsAPI} from "./../api/skill-api.js"
+import {getAchievementsAPI} from "./../api/achievement-api.js"
+import {getExperiencesAPI} from "./../api/experience-api.js"
+import {getProjectsAPI} from "./../api/project-api.js"
+import {getEducationsAPI} from "./../api/education-api.js"
+import {getToolsAPI} from "./../api/tool-api.js"
+import AnimationMainFunction from "./animation.js"
+
+import  setDirtyDataTag from "../utils/set-dirty-datatag.js"
+
+
+/* ==========================================================================
+  DISPLAY PROFILE CARD
+========================================================================== */
+const displayProfileCard = async () => {
+  try{
+    const data = await getMainInfoAPI()
+
+    const profileCardHTML = `
+      <div class="profile-card__img-container">
+        <input type="file" id="profileImageInput" class="profile-image-input image-input" accept="image/*" hidden>
+        <label for="profileImageInput" class="profile-card__img-container--input-icon" title="Upload-Image">
+          <i class="fa-solid fa-camera"></i>
+        </label>
+
+        <img class="profile-card__image image-preview"
+             src=${data.info.profileImage || "https://res.cloudinary.com/djn4huijp/image/upload/v1770212152/editable-portfolio-1/images/takagi-profile-pic-1770212160115.jpg" }
+             alt="profile-image">
+      </div>
+      
+      <div class="profile-card__details">
+        <select name="select-work-availability" id="select-work-availability">
+          <option value="available">Available for work</option>
+          <option value="unavailable">Unavailable for work</option>
+        </select>
+
+        <div class="work-availability ${data.info.workAvailability}">
+          <span class="work-availability__dot-status"></span>
+          <p class="work-availability__label">Available for work</p>
+        </div>
+
+        <div class="profile-card__name editable-text"> ${data.info.name} </div>
+
+        <div class="social-list-inputs">
+          <input class="instagram-input-link" type="text" placeholder="Enter instagram link" value="${data.info.instagramLink}">
+          <input class="tiktok-input-link" type="text" placeholder="Enter tiktok link" value="${data.info.tiktokLink}">
+          <input class="youtube-input-link" type="text" placeholder="Enter youtube link" value="${data.info.youtubeLink}">
+          <input class="facebook-input-link" type="text" placeholder="Enter facebook link" value="${data.info.facebookLink}">
+        </div>
+
+        <div class="profile-card__social-list">
+          <a href="${data.info.instagramLink}" class="profile-card__social-list--img" target="_blank">
+            <img class="profile-card__social-list--img-icon" src="images-and-icons/instagram.png" alt="instagram-img">
+          </a>
+          <a href="${data.info.tiktokLink}" class="profile-card__social-list--img" target="_blank">
+            <img class="profile-card__social-list--img-icon" src="images-and-icons/tiktok.png" alt="tiktok-icon">
+          </a>
+          <a href="${data.info.youtubeLink}" class="profile-card__social-list--img" target="_blank">
+            <img class="profile-card__social-list--img-icon" src="images-and-icons/youtube.png" alt="youtube-icon">
+          </a>
+          <a href="${data.info.facebookLink}" class="profile-card__social-list--img" target="_blank"> 
+            <img class="profile-card__social-list--img-icon" src="images-and-icons/facebook.png" alt="facebook-icon">
+          </a>
+        </div>
+
+        <div class="profile-card__buttons-container">
+          <input id="CV-upload" type="file" accept=".pdf,.doc,.docx" hidden>
+          <label for="CV-upload" class="profile-card__btn upload-cv-btn" title="Upload-CV">
+            <i class="fa-solid fa-upload"></i>
+            <span class="profile-card__btn--label">Upload CV</span>
+          </label>
+            
+          <a href="${data.info.cvFile || "#"}" target="_blank" download class="profile-card__btn download-cv-btn">
+            <i class="profile-card__btn--icon fas fa-download"></i>
+            <p class="profile-card__btn--label">Download CV</p>
+          </a>
+          
+          <a href="#contact-section" class="profile-card__btn contact-me-btn">
+            <img class="profile-card__btn--icon" src="images-and-icons/contact-icon.png" alt="contact-icon">
+            <p class="profile-card__btn--label">Contact Me</p>
+          </a>
+        </div>
+      </div>
+    `;
+
+    document.getElementById('profile-card').innerHTML = profileCardHTML;
+    document.dispatchEvent(new Event("displayedProfileCard"));
+
+  }catch(err){
+    console.log(err);
+  }
+
+}
+
+
+// ================================
+// UPDATE WORK AVAILABILITY
+// ================================
+const updateWorkAvailability = async () => {
+  document.addEventListener('displayedProfileCard', () => {
+    const workAvailabilityContainer = document.querySelector('.work-availability');
+    const workAvailabilityLabel = document.querySelector('.work-availability__label');
+
+    if(workAvailabilityContainer.classList.contains('available')) workAvailabilityLabel.innerText = 'Available For Work';
+    else workAvailabilityLabel.innerText = 'Unavailable For Work';
+  });
+}
+
+
+/* ==========================================================================
+  DISPLAY ABOUT SECTION
+========================================================================== */
+const displayAboutSection = async () => {
+  try {
+    const [skillsData, mainInfoData, achievementsData] = await Promise.all([
+      getSkillsAPI(),
+      getMainInfoAPI(),
+      getAchievementsAPI()
+    ]); //parallel request
+
+    // Get the skills array
+    const skills = skillsData.skills; 
+
+    // Generate HTML for each skill input dynamically
+    const skillInputsHTML = skills.map(skill => `
+      <div class="about-section__skill-input" data-id="${skill._id}">
+        <input type="text" data-id="${skill._id}" class="about-section__skill-value" value="${skill.skillName}" placeholder="Enter your skill">
+        <button class="about-section__skill-input--delete-btn delete-button" data-id="${skill._id}" type="button" aria-label="Delete">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+    `).join('');
+
+    // Full About Section HTML
+    const aboutSectionHTML = `
+      <h2 class="about-section__greetings">I'm ${mainInfoData.info.name},</h2>
+      <h3 class="about-section__skills"></h3>
+      
+      <div class="about-section__skills-inputs-list">
+        ${skillInputsHTML}
+        <button class="about-section__add-skill-btn add-content-btn" type="button">Add Skill</button>
+      </div>
+
+      <p class="about-section__adress">
+        From ${mainInfoData.info.address}
+      </p>
+
+      <!-- about me input -->
+      <div class="editable-text about-section__about-me">${mainInfoData.info.aboutMe || ''}</div>
+
+      <!-- achievement list -->
+      <div class="achievements-list">
+        ${achievementsData.achievements.map(ach => `
+          <div class="achievements-list__achievement" data-id="${ach._id}">
+            <button class="achievements-list__achievement--delete-btn delete-button" data-id="${ach._id}" type="button" aria-label="Delete">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="achivements-list__achievement--number-container">
+              <div class="editable-text achivements-list__achievement--number" data-target="achievement-number-input">${ach.number}</div>
+              <span class="plus-txt">+</span>
+            </div>
+            <div class="editable-text achivements-list__achivement--label" data-target="achievement-label-input">${ach.name}</div>
+          </div>
+        `).join('')}
+
+        <button class="achievements-list__add-btn add-content-btn" type="button">Add Achievement</button>
+      </div>
+    `;
+
+    // Inject into the DOM
+    const aboutSectionContainer = document.getElementById('about-section');
+    aboutSectionContainer.innerHTML = aboutSectionHTML;
+    document.dispatchEvent(new Event("displayedAboutSection"));
+    
+  } catch(err) {
+    console.error(err);
+  }
+};
+
+
+// ================================
+// CHANGE SKILLS TEXT CONTENT
+// ================================
+const changeSkillsContent = () => {
+  document.addEventListener('displayedAboutSection', async () => {
+    try {
+      const skillsData = await getSkillsAPI();
+      const mySkills = skillsData.skills; 
+
+      const displaySkills = document.querySelector('.about-section__skills');
+      if (!displaySkills) return;
+
+      // no skills → hide text
+      if (!Array.isArray(mySkills) || mySkills.length === 0) {
+        displaySkills.style.display = 'none';
+        return;
+      } else {
+        displaySkills.style.display = 'inline-block';
+      }
+
+      const typeSpeed = 80;        // ms per char when typing
+      const deleteSpeed = 60;      // ms per char when deleting
+      const pauseAfterType = 2000; // ms to wait after a full word is typed
+      const pauseAfterDelete = 500;// ms to wait after delete completes
+
+      const delay = ms => new Promise(res => setTimeout(res, ms));
+
+      // ============================
+      // Loop forever over skills
+      // ============================
+      (async function runTypingLoop() {
+        let index = 0;
+
+        while (true) {
+          const skillObj = mySkills[index];
+          if (!skillObj || !skillObj.skillName) {
+            index = (index + 1) % mySkills.length;
+            continue;
+          }
+
+          const skill = skillObj.skillName;
+
+          // Type
+          for (let i = 1; i <= skill.length; i++) {
+            displaySkills.textContent = skill.slice(0, i);
+            await delay(typeSpeed);
+          }
+
+          await delay(pauseAfterType);
+
+          // Delete
+          for (let i = skill.length; i >= 0; i--) {
+            displaySkills.textContent = skill.slice(0, i);
+            await delay(deleteSpeed);
+          }
+
+          await delay(pauseAfterDelete);
+
+          // Move to next skill (even if there's only 1, it loops correctly)
+          index = (index + 1) % mySkills.length;
+        }
+      })();
+
+    } catch (err) {
+      console.error(err);
+    }
+  });
+};
+
+
+/* ==========================================================================
+  DISPLAY EXPERIENCE SECTION
+========================================================================== */
+const displayExperienceSection = async () => {
+  try{
+    const experienceData = await getExperiencesAPI();
+    const expriences = experienceData.experiences;
+
+    let experienceCardHTML = '';
+
+    expriences.forEach(experience => {
+      // console.log(experience.img)
+      
+      experienceCardHTML += `
+        <div class="experience-card with-image-content" data-id=${experience._id}>
+          <button class="experience-card__delete-btn delete-button" data-id=${experience._id} type="button" aria-label="Delete">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+
+          <div class="experince-card__top-area">
+            <div class="experince-card__img-title-container">
+              <div class="experience-card__img-container">
+                <input type="file" id="experience-card__img-input-${experience._id}" class="image-input" accept="image/*" hidden>
+                <label for="experience-card__img-input-${experience._id}" class="experience-card__img--input-icon" title="Upload-Image">
+                  <i class="fa-solid fa-camera"></i>
+                </label>
+                
+                <img src=${experience.img || "https://res.cloudinary.com/djn4huijp/image/upload/v1770263039/default-image_cca1xk.png"} 
+                     class="image-preview"
+                     alt="icon">
+              </div>
+              
+              <div class="experience-card__title-and-company">
+                <p class="editable-text experience-card__title" data-target="experience-card__title-input">${experience.title}</p>
+                <p class="editable-text experience-card__company" data-target="experience-card__company-input">${experience.company}</p>
+              </div>
+            </div>
+            
+            <p class="editable-text experience-card__date-range" data-target="experience-card__date-range-input">${experience.dateRange}</p>
+          </div>
+
+          <div class="experience-card__line"></div>
+
+          <p class="editable-text experience-card__details" data-target="experience-card__details-input">${experience.details}</p>
+        </div>
+      `
+    });
+
+    // Insert the add button in the card-list
+    experienceCardHTML += `
+      <button class="add-content-btn experience-cards-list__add-btn" type="button">
+        Add Experience
+      </button>
+    `;
+
+    const experienceSectionContainer = document.querySelector('.experience-cards-list') 
+
+    // Inject into the DOM
+    if (experienceSectionContainer) {
+      experienceSectionContainer.innerHTML = experienceCardHTML;
+      document.dispatchEvent(new Event("displayedExperienceSection"));
+    }
+
+  } catch(err){
+    console.log(err);
+  }
+}
+
+
+/* ==========================================================================
+  DISPLAY PROJECTS SECTION
+========================================================================== */
+const displayProjectsSection = async () => {
+  try {
+    const projectsData = await getProjectsAPI();
+    const projects = projectsData.projects;
+
+
+
+    const projectList = document.querySelector('.project-list');
+    const moreProjectsList = document.querySelector('.more-projects-list');
+
+    if (!projectList || !moreProjectsList) return;
+
+    let projectListHTML = '';
+    let moreProjectsHTML = '';
+
+    projects.forEach((project, index) => {
+      // console.log(project.img);
+
+      const projectCardHTML = `
+        <div class="project-card with-image-content" data-id=${project._id}>
+          <a class="profile-card__link" href="${project.link}" target="_blank">Link</a>
+          
+          <button class="project-card__delete-btn delete-button" data-id=${project._id} type="button">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+
+          <div class="project-card__img-container">
+            <input type="file" id="project-card__img-input-${project._id}" class="image-input" accept="image/*" hidden>
+            <label for="project-card__img-input-${project._id}" class="project-card__img-container--input-icon">
+              <i class="fa-solid fa-camera"></i>
+            </label>
+
+            <img class="project-card__img image-preview" src=${project.img || "https://res.cloudinary.com/djn4huijp/image/upload/v1770263039/default-image_cca1xk.png"} alt="project-image">
+          </div>
+
+          <div class="project-card__details">
+            <div class="project-card__details--name-and-about">
+              <p class="editable-text project-card__title">${project.title}</p>
+              <p class="editable-text project-card__type">${project.type}</p>
+            </div>
+
+            <div class="project-card__arrow">
+              <i class="project-card__arrow--icon one bi bi-arrow-up-right"></i>
+              <i class="project-card__arrow--icon two bi bi-arrow-up-right"></i>
+            </div>
+
+            <input class="profile-card__input-link" type="text" value="${project.link || ''}" placeholder="Enter your project link">
+          </div>
+        </div>
+      `;
+
+      if (index < 4) {
+        projectListHTML += projectCardHTML;
+      } else {
+        moreProjectsHTML += projectCardHTML;
+      }
+    });
+
+    projectList.innerHTML = projectListHTML;
+
+    // keep Add Project button at the bottom
+    moreProjectsList.innerHTML =
+      moreProjectsHTML +
+      `
+        <button class="add-content-btn projects-card-container__add-project-btn" type="button">
+          Add Project
+        </button>
+      `;
+
+    // Hide More Button
+    const loadMoreBtn = document.querySelector('.projects-card-container__load-more-btn');
+
+    if (projects.length <= 4) {
+      loadMoreBtn.classList.add('hide');
+    } else {
+      loadMoreBtn.classList.remove('hide');
+    }
+
+    document.dispatchEvent(new Event("displayedProjectSection"));
+
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+
+/* ==========================================================================
+  DISPLAY EDUCATION SECTION
+========================================================================== */
+const displayEducationSection = async () => {
+  try{
+    const educationData = await getEducationsAPI();
+    const educations = educationData.educations;
+    
+    let educationCardHTML = '';
+
+    educations.forEach(education => {
+      educationCardHTML += `
+        <div class="education-card" data-id=${education._id}>
+          <button class="education-card__delete-btn delete-button" data-id=${education._id} type="button" aria-label="Delete">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+
+          <div class="education-card__top-area">
+            <div class="education-card__title-and-institution">
+              <h3 class="editable-text education-card__title">${education.title}</h3>
+
+              <p class="education-card__institution">
+                <span class="editable-text education-card__program">${education.institution}</span>
+              </p>
+            </div>
+
+            <p class="editable-text education-card__date-range">${education.dateRange}</p>
+          </div>
+
+          <div class="education-card__line"></div>
+
+          <p class="editable-text education-card__details">${education.details}</p>
+        </div>`
+    });
+
+    // Insert the add button in the of education-list
+    educationCardHTML += `<button class="add-content-btn education-card-list__add-education-btn" type="button">Add Education</button>`;
+
+    const educationCardContainer = document.querySelector('.education-card-list');
+
+    if(educationCardContainer){
+      educationCardContainer.innerHTML = educationCardHTML;
+      document.dispatchEvent(new Event("displayedEducationSection"));
+    }
+
+  }catch(err) {
+    console.log(err);
+  }
+}
+
+
+/* ==========================================================================
+  DISPLAY TOOLS SECTION
+========================================================================== */
+const displayToolsSection = async () => {
+  try{
+    const toolsData = await getToolsAPI();
+    const tools = toolsData.tools;
+
+    let toolCardHTML = '';
+
+    tools.forEach(tool => {
+      toolCardHTML += `
+        <div class="tool-card with-image-content" data-id=${tool._id}>
+          <button class="tool-card__delete-btn delete-button" data-id=${tool._id} type="button" aria-label="Delete">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+
+          <div class="tool-card__icon-container">
+            <input type="file" class="image-input" id="tool-img-input-${tool._id}" accept="image/*" hidden>
+            <label for="tool-img-input-${tool._id}" class="tool-card__img-input-icon" title="Upload-Image">
+              <i class="fa-solid fa-camera"></i>
+            </label>
+
+            <img class="tool-card__icon image-preview"
+                 src=${tool.img || "https://res.cloudinary.com/djn4huijp/image/upload/v1770263039/default-image_cca1xk.png"}
+                 alt="icon">
+          </div>
+
+          <div class="tool-card__details-container">
+            <p class="editable-text tool-card__name">${tool.name}</p>
+            <p class="editable-text tool-card__details">${tool.details}</p>
+          </div>
+        </div>
+      `
+    });
+
+    toolCardHTML += `<button class="add-content-btn tools-card-list__add-tool-btn" type="button">Add Tool</button>`;
+
+    const toolCardContainer = document.querySelector('.tools-card-list');
+
+    if(toolCardContainer){
+      toolCardContainer.innerHTML = toolCardHTML;
+      document.dispatchEvent(new Event("displayedToolsSection"));
+    }
+
+  }catch(err) {
+    console.log(err);
+  }
+}
+
+
+/* ==========================================================================
+  DISPLAY CONTACT CARDS 
+========================================================================== */
+const displayContactCards = async () => {
+  try{
+    const mainInfoData = await getMainInfoAPI();
+
+    const contactCardHTML = `
+      <div class="contact-card">
+        <i class="contact-card-icon bi bi-telephone"></i>
+        <div class="contact-card__details">
+          <p class="contact-card__label">Contact No.</p>
+          <p class="editable-text contact-card__value" id="contact-number">${mainInfoData.info.contactNumber}</p>
+        </div>
+      </div>
+      <div class="contact-card">
+        <i class="contact-card-icon bi bi-telephone"></i>
+        <div class="contact-card__details">
+          <p class="contact-card__label">Email</p>
+          <p class="editable-text contact-card__value" id="email">${mainInfoData.email}</p>
+          <input type="hidden" name="contact-email-input" id="contact-email-input">
+        </div>
+
+      </div>
+      <div class="contact-card">
+        <i class="contact-card-icon bi bi-telephone"></i>
+        <div class="contact-card__details">
+          <p class="contact-card__label">Address</p>
+          <p class="editable-text contact-card__value"id="address">${mainInfoData.info.address}</p>
+          <input type="hidden" name="contact-adress-input" id="contact-adress-input">
+        </div>
+      </div>
+    `;
+
+    const contactCardContainer = document.querySelector('.contact-card-list');
+
+    if(contactCardContainer){
+      contactCardContainer.innerHTML = contactCardHTML;
+      document.dispatchEvent(new Event("displayedContactCards"));
+    }
+
+  }catch(err) {
+    console.log(err);
+  }
+}
+
+
+const DISPLAY_EVENTS = [
+  "displayedProfileCard",
+  "displayedAboutSection",
+  "displayedExperienceSection",
+  "displayedProjectSection",
+  "displayedEducationSection",
+  "displayedToolsSection",
+  "displayedContactCards",
+];
+
+DISPLAY_EVENTS.forEach(eventName => {
+  document.addEventListener(eventName, () => {
+    setDirtyDataTag();
+  });
+});
+
+
+
+
+/* ==========================================================================
+  MAIN FUNCTION 
+========================================================================== */
+async function DisplayContentMain () {
+  const startingLoader = document.querySelector('#starting-loading');
+  const mainWrapperContent = document.querySelector('.main-wrapper');
+
+  startingLoader.classList.remove('hide');
+  mainWrapperContent.classList.add('hide');
+
+  try {
+    await Promise.all([
+      displayProfileCard(),
+      displayAboutSection(),
+      displayExperienceSection(),
+      displayProjectsSection(),
+      displayEducationSection(),
+      displayToolsSection(),
+      displayContactCards(),
+      updateWorkAvailability(),
+      changeSkillsContent(),
+    ]);
+
+    setDirtyDataTag();
+
+
+  } catch (err) {
+    console.error(err);
+  } finally {
+    startingLoader.classList.add('hide');
+    mainWrapperContent.classList.remove('hide');
+    AnimationMainFunction();
+  }
+}
+
+
+export { DisplayContentMain,
+         displayAboutSection,
+         displayExperienceSection,
+         displayProjectsSection,
+         displayEducationSection,
+         displayToolsSection,
+         displayContactCards};
+

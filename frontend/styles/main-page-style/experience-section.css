@@ -1,0 +1,185 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
+#experience-section {
+  padding-top: 10px;
+}
+
+.experience-cards-list{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 16px;
+}
+
+.experience-card{
+  position: relative;
+  background-color: var(--box-bg);
+  border: 1px solid var(--box-border-clr);
+  border-radius: 12px;
+  padding: 16px 24px;
+}
+
+.experince-card__top-area{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 10px
+}
+
+.experince-card__img-title-container{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 16px;
+}
+
+.experience-card__img-container{
+  position: relative;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+.experience-card__img-container img{
+  --size: 26px;
+
+  width: var(--size);
+  height: var(--size);
+}
+
+.view-mode .experience-card__img--input-icon{
+  display: none;
+}
+
+.experience-card__title{
+  font-size: var(--experience-title-txt);
+  line-height: 1.6em;
+  font-weight: 600;
+}
+
+.experience-card__company{
+  font-size: var(--experience-company-txt);
+  font-weight: 500;
+  color: var(--text-color-2);
+  line-height: 1.6em;
+}
+
+.experience-card__date-range{
+  border: inherit;
+  background-color: rgb(25, 25, 25);
+  border-radius: 4px;
+  border: 1px solid var(--box-border-clr);
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  min-width: -webkit-fill-available; 
+  min-width: -webkit-fit-content; 
+  min-width: -moz-fit-content; 
+  min-width: fit-content;
+  padding: 6px 12px;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  font-weight: 500;
+  font-size: var(--experience-details-and-year-txt);
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+.experience-card__line{
+  margin: 11px 0;
+  background-color: var(--box-border-clr);
+  width: 100%;
+  height: 1px;
+}
+
+.experience-card__details{
+  font-size: var(--experience-details-and-year-txt);
+  line-height: 1.6em;
+  font-weight: 500;
+  color: var(--text-color-2);
+}
+
+.view-mode .experience-cards-list__add-btn{
+  display: none;
+}
+
+/* ============================================================================
+                                 EDIT MODE
+  ============================================================================= */
+.edit-mode .experience-card__delete-btn{
+  font-size: 1.3rem;
+  position: absolute;
+  z-index: 10;
+  top: 0%;
+  right: -13px;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  background: transparent;
+  border: none;
+}
+
+.edit-mode .experience-card__img--input-icon{
+  display: inline-block;
+  position: absolute;
+  font-size: 0.8rem;
+  right: -5px;
+  top: -10px;
+  cursor: pointer;
+  color: rgb(206, 206, 206);
+}
+
+.edit-mode .experience-card__title{
+  margin-bottom: 6px;
+}
+
+.edit-mode .experience-card__company{
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.edit-mode .experience-card__date-range{
+  background-color: transparent;
+}
+
+.edit-mode .experience-cards-list__add-btn{
+  display: inline-block;
+  border-radius: 5px;
+  padding: 15px 8px;
+}
+
+/* ================================================
+                WIDTH >= 500px
+  ================================================= */
+@media(width >= 31.25em){
+  .experince-card__top-area{
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+}
