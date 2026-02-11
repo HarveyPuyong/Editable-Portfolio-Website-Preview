@@ -12,7 +12,7 @@ import { displayAboutSection, displayExperienceSection,
         displayToolsSection
 } from './display-contents.js';
 
-import {editSkill, editAchievement,
+import {editMainInfo, editSkill, editAchievement,
         editExperience, editProject,
         editEducation, editTool} from './edit-content.js'
 
@@ -25,7 +25,9 @@ const deleteSkill = async (e) => {
     const btn = e.target.closest('.about-section__skill-input--delete-btn');
     btn.disabled = true;
     try {
+      await editMainInfo();
       await editSkill();
+      await editAchievement();
       await deleteSkillAPI(btn.dataset.id);
       await displayAboutSection();
 
@@ -46,6 +48,8 @@ const deleteAchievement = async (e) => {
     const btn = e.target.closest('.achievements-list__achievement--delete-btn');
     btn.disabled = true;
     try {
+      await editMainInfo();
+      await editSkill();
       await editAchievement();
       await deleteAchievementAPI(btn.dataset.id);
       await displayAboutSection();

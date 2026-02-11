@@ -5,6 +5,7 @@ const UserDB = require('../models/user-schema');
 const loginController = async (req, res) => {
   try {
     const { email, password } = req.body; // validated by middleware
+    console.log(email, password);
 
     const foundUser = await UserDB.findOne({ email }).exec();
     if (!foundUser) return res.status(404).json({ message: "User not found" });

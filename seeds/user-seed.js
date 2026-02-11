@@ -3,7 +3,9 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const userInfo = require('../models/user-schema');
 
-const MONGO_URI = process.env.DB_URI || 'mongodb://localhost:27017/Editable-Portfolio_1_DB';
+const MONGO_URI = 'mongodb://localhost:27017/Editable-Portfolio_1_DB_Preview';
+//const MONGO_URI = 'mongodb+srv://harvey:Harvey152312@cluster0.tylqtxy.mongodb.net/editable-portfolio_1_preview?retryWrites=true&w=majority';
+
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 

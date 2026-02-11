@@ -13,7 +13,7 @@ import { editToolAPI } from "./../api/tool-api.js";
 // TRACK DIRTY ELEMENT OF EDITED ELEMENT
 // ================================
 const trackDirtyElement = () => {
-  document.addEventListener('input', (e) => {
+  document.addEventListener('change', (e) => {
     const target = e.target;
 
     const editableText = target.classList.contains('editable-text');
@@ -52,7 +52,7 @@ const imagePreview = () => {
 // ==========================================
 // EDIT MAIN INFO (DIRTY ONLY)
 // ==========================================
-const editMainInfo = async () => {
+export const editMainInfo = async () => {
   const formData = new FormData();
 
   const nameEl = document.querySelector('.profile-card__name');

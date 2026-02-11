@@ -11,8 +11,8 @@ const Project = require("../models/project-schema");
 const Skill = require("../models/skill-schema");
 const Tool = require("../models/tool-schema");
 
-// const MONGO_URI = "mongodb://localhost:27017/Editable-Portfolio_1_DB";
-const MONGO_URI = "mongodb+srv://harvey:Harvey152312@cluster0.tylqtxy.mongodb.net/editable-portfolio_1?retryWrites=true&w=majority";
+const MONGO_URI = 'mongodb://localhost:27017/Editable-Portfolio_1_DB_Preview';
+//const MONGO_URI = 'mongodb+srv://harvey:Harvey152312@cluster0.tylqtxy.mongodb.net/editable-portfolio_1_preview?retryWrites=true&w=majority';
 
 async function seedInfo() {
   try {

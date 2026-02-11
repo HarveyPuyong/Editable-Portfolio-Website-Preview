@@ -13,7 +13,7 @@ import {displayAboutSection,
         displayEducationSection,
         displayToolsSection} from './display-contents.js'
 
-import {editSkill, editAchievement,
+import {editMainInfo, editSkill, editAchievement,
         editExperience, editProject,
         editEducation, editTool} from './edit-content.js'
 
@@ -27,7 +27,9 @@ const addSkill = async (e) => {
     addBtn.disabled = true;
 
     try {
+      await editMainInfo();
       await editSkill();
+      await editAchievement();
       await addSkillAPI({ skillName: undefined });
       await displayAboutSection();
 
@@ -49,6 +51,8 @@ const addAchievement = async (e) => {
     addBtn.disabled = true;
 
     try {
+      await editMainInfo();
+      await editSkill();
       await editAchievement();
       await addAchievementAPI({ number: undefined, name: undefined });
       await displayAboutSection();

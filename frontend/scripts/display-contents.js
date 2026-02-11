@@ -30,7 +30,7 @@ const displayProfileCard = async () => {
       </div>
       
       <div class="profile-card__details">
-        <select name="select-work-availability" id="select-work-availability">
+        <select name="select-work-availability" id="select-work-availability" data-dirty="true">
           <option value="available">Available for work</option>
           <option value="unavailable">Unavailable for work</option>
         </select>
