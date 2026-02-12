@@ -13,7 +13,7 @@ import { editToolAPI } from "./../api/tool-api.js";
 // TRACK DIRTY ELEMENT OF EDITED ELEMENT
 // ================================
 const trackDirtyElement = () => {
-  document.addEventListener('change', (e) => {
+  document.addEventListener('input', (e) => {
     const target = e.target;
 
     const editableText = target.classList.contains('editable-text');
@@ -24,7 +24,7 @@ const trackDirtyElement = () => {
 
     if (editableText || editableInput) {
       target.dataset.dirty = 'true';
-      console.log('Marked dirty:', target);
+      // console.log('Marked dirty:', target);
     }
   });
 };
@@ -33,24 +33,48 @@ const trackDirtyElement = () => {
 // IMAGE PREVIEW
 // ================================
 const imagePreview = () => {
-  document.addEventListener('change', e => {
-    if (!e.target.classList.contains('image-input')) return;
+  const eventsName = ['displayedToolsSection', 'displayedProjectSection', 'displayedProfileCard']
+  
+  eventsName.forEach(eventName => document.addEventListener(eventName, () => {
+    document.addEventListener('change', e => {
+      if (!e.target.classList.contains('image-input')) return;
 
-    const container = e.target.closest('.with-image-content');
-    if (!container) return;
+      const container = e.target.closest('.with-image-content');
+      if (!container) return;
 
-    const image = container.querySelector('.image-preview');
-    const file = e.target.files[0];
-    if (!file || !image) return;
+      const image = container.querySelector('.image-preview');
+      const file = e.target.files[0];
+      if (!file || !image) return;
 
-    const reader = new FileReader();
-    reader.onload = ev => image.src = ev.target.result;
-    reader.readAsDataURL(file);
-  });
+      const reader = new FileReader();
+      reader.onload = ev => image.src = ev.target.result;
+      reader.readAsDataURL(file);
+    });
+  }));
 };
 
+// ================================
+// POPUP ALERT AFTER UPLOADING FILE
+// ================================
+const popupAfterUploadingFile = () => {
+  document.addEventListener('edit-mode', () => {
+    const cvInput = document.querySelector('#CV-upload');
+    if (!cvInput) return;
+
+    // Prevent attaching multiple identical listeners if edit-mode fires repeatedly
+    if (cvInput.dataset.changeListenerAttached === 'true') return;
+
+    cvInput.addEventListener('change', () => {
+      if (cvInput?.files && cvInput?.files[0]) popupSuccess('Successfully Uploaded the file')
+      else popupError('Error to upload the file')
+    });
+
+    cvInput.dataset.changeListenerAttached = 'true';
+  });
+}
+
 // ==========================================
-// EDIT MAIN INFO (DIRTY ONLY)
+// EDIT MAIN INFO
 // ==========================================
 export const editMainInfo = async () => {
   const formData = new FormData();
@@ -78,7 +102,7 @@ export const editMainInfo = async () => {
 
   const tiktokLinkInput = document.querySelector('.tiktok-input-link');
   if (tiktokLinkInput.dataset.dirty === 'true') formData.append("tiktokLink", tiktokLinkInput.value);
-  
+
   const youtubeLinkInput = document.querySelector('.youtube-input-link');
   if (youtubeLinkInput.dataset.dirty === 'true') formData.append("youtubeLink", youtubeLinkInput.value);
 
@@ -90,6 +114,7 @@ export const editMainInfo = async () => {
 
   const cvInput = document.querySelector('#CV-upload');
   if (cvInput?.files[0]) formData.append("cvFile", cvInput.files[0]);
+  
 
   try {
     await editMainInfoAPI(formData);
@@ -325,16 +350,9 @@ export const editTool = async () => {
 };
 
 // ==========================================
-// MAIN FUNCTION
+// HANDLE SUBMIT FORM
 // ==========================================
-export function EditContentMain() {
-  trackDirtyElement();
-
-  // image preview listeners
-  ['displayedToolsSection', 'displayedProjectSection', 'displayedProfileCard']
-    .forEach(eventName => document.addEventListener(eventName, () => imagePreview()));
-
-  // submit edit form
+const handleSubmitForm = () => {
   document.addEventListener('edit-mode', () => {
     const editForm = document.querySelector('#edit-content-form');
 
@@ -359,4 +377,15 @@ export function EditContentMain() {
       }
     });
   });
+}
+
+
+// ==========================================
+// MAIN FUNCTION
+// ==========================================
+export function EditContentMain() {
+  trackDirtyElement();
+  imagePreview();
+  popupAfterUploadingFile();
+  handleSubmitForm();
 }
