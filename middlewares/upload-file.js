@@ -9,27 +9,30 @@ const path = require("path");
 const storage = new CloudinaryStorage({
   cloudinary,
   params: (req, file) => {
-    const ext = path.extname(file.originalname).slice(1);
+    const ext = path.extname(file.originalname).slice(1).toLowerCase();
     const baseName = path.basename(
       file.originalname,
       path.extname(file.originalname)
     );
 
-    const isPdf = file.mimetype === "application/pdf";
+    const isDocument = [
+      "application/pdf",
+      "application/msword",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    ].includes(file.mimetype);
 
     return {
-      folder: isPdf
-        ? "editable-portfolio-1/documents"
-        : "editable-portfolio-1/images",
+      folder: isDocument ? "editable-portfolio-1/documents" : "editable-portfolio-1/images",
 
       public_id: `${baseName}-${Date.now()}`,
 
-      resource_type: isPdf ? "raw" : "image",
+      resource_type: isDocument ? "raw" : "image",
+
+      //  THIS FIXES MISSING EXTENSION
+      format: isDocument ? ext : undefined,
 
       // Only apply transformations to images
-      transformation: isPdf
-        ? undefined
-        : [{ quality: "auto", fetch_format: "auto" }],
+      transformation: isDocument ? undefined : [{ quality: "auto", fetch_format: "auto" }],
     };
   },
 });
@@ -43,6 +46,8 @@ const fileFilter = (req, file, cb) => {
     "image/png",
     "image/gif",
     "application/pdf",
+    "application/msword", 
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
   ];
 
   if (allowedMimeTypes.includes(file.mimetype)) {
@@ -50,7 +55,7 @@ const fileFilter = (req, file, cb) => {
   } else {
     cb(
       new Error(
-        "Invalid file type. Only JPG, PNG, GIF images and PDF files are allowed."
+        "Invalid file type. Only JPG, PNG, GIF, PDF, DOC, and DOCX files are allowed."
       )
     );
   }
