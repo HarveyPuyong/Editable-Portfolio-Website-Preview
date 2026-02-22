@@ -12,9 +12,9 @@ const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 async function seedAdmin() {
   try {
     await mongoose.connect(MONGO_URI);
-    console.log("Connected to MongoDB");
+    console.log("User Seed Connected to MongoDB");
 
-    // Delete any existing admin with the same email
+    // Delete any existing admin
     await userInfo.deleteMany({});
 
     // Hash the password
@@ -27,11 +27,14 @@ async function seedAdmin() {
     });
 
     console.log("New admin created successfully!");
-    process.exit(0);
   } catch (err) {
     console.error("Error:", err.message);
-    process.exit(1);
+    throw err;
   }
 }
 
-seedAdmin();
+if (require.main === module) {
+  seedAdmin().then(() => process.exit(0)).catch(() => process.exit(1));
+}
+
+module.exports = { seedAdmin };

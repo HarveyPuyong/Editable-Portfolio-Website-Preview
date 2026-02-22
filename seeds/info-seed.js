@@ -17,7 +17,7 @@ const MONGO_URI = 'mongodb://localhost:27017/Editable-Portfolio_1_DB_Preview';
 async function seedInfo() {
   try {
     await mongoose.connect(MONGO_URI);
-    console.log("Connected to MongoDB");
+    console.log("Info Seed Connected to MongoDB");
 
     // ================= CLEAR DATA =================
     await Promise.all([
@@ -34,24 +34,30 @@ async function seedInfo() {
 
     // ================= ACHIEVEMENTS =================
     await Achievement.insertMany([
-      { number: "1", name: "First Achievement" },
-      { number: "2", name: "Second Achievement" },
+      { number: "5", name: "First Achievement" },
+      { number: "8", name: "Second Achievement" },
     ]);
 
     // ================= EDUCATION =================
     await Education.insertMany([
       {
-        title: "Bachelor of Science",
-        institution: "University ABC",
-        details: "Major in CS",
-        dateRange: "2015 - 2019",
+        title: "Elementary School",
+        institution: "XYZ Elementary School",
+        details: "Elementary School Diploma",
+        dateRange: "2008 - 2015",
       },
       {
         title: "High School",
         institution: "XYZ High School",
         details: "High School Diploma",
-        dateRange: "2011 - 2015",
+        dateRange: "2016 - 2020",
       },
+      {
+        title: "Bachelor of Science Technology",
+        institution: "University ABC",
+        details: "Major in CS",
+        dateRange: "2021 - 2025",
+      }
     ]);
 
     // ================= EXPERIENCE =================
@@ -79,10 +85,10 @@ async function seedInfo() {
       profileImage: "https://res.cloudinary.com/djn4huijp/image/upload/v1770263038/default-profile-img_tayqnl.png",
       profileImagePublicId: "default/default-profile-img_tayqnl",
       workAvailability: "available",
-      name: "John Doe",
+      name: "Your Name",
       cvFile: null,
       cvFilePublicId: null,
-      aboutMe: "Full-stack developer with passion for web apps",
+      aboutMe: "This is about me, I'm a full-stack developer with passion for web apps",
       contactNumber: "09123456789",
       address: "123 Street, City",
       instagramLink: "https://instagram.com",
@@ -95,7 +101,7 @@ async function seedInfo() {
     await Project.insertMany([
       {
         title: "Portfolio Website",
-        type: "Web Development",
+        type: "Website",
         link: "https://portfolio.com",
         img: "https://res.cloudinary.com/djn4huijp/image/upload/v1770263039/default-image_cca1xk.png",
         imgPublicId: "default/default-image_cca1xk"
@@ -111,10 +117,9 @@ async function seedInfo() {
 
     // ================= SKILLS =================
     await Skill.insertMany([
-      { skillName: "JavaScript" },
-      { skillName: "Node.js" },
-      { skillName: "React" },
-      { skillName: "MongoDB" },
+      { skillName: "Programmer" },
+      { skillName: "Web Developer" },
+      { skillName: "UI Desinger" },
     ]);
 
     // ================= TOOLS =================
@@ -131,14 +136,32 @@ async function seedInfo() {
         img: "https://res.cloudinary.com/djn4huijp/image/upload/v1770263039/default-image_cca1xk.png",
         imgPublicId: "default/default-image_cca1xk"
       },
+      {
+        name: "HTML",
+        details: "HyperTxt Markup Language",
+        img: "https://res.cloudinary.com/djn4huijp/image/upload/v1770263039/default-image_cca1xk.png",
+        imgPublicId: "default/default-image_cca1xk"
+      },
+      {
+        name: "CSS",
+        details: "StyleSheet",
+        img: "https://res.cloudinary.com/djn4huijp/image/upload/v1770263039/default-image_cca1xk.png",
+        imgPublicId: "default/default-image_cca1xk"
+      },
     ]);
 
     console.log("Database seeded successfully!");
-    process.exit(0);
+    // do not exit when called programmatically
+
   } catch (err) {
     console.error("Seeding error:", err);
-    process.exit(1);
+    throw err;
   }
 }
 
-seedInfo();
+// allow script to run in terminal using this code 'node filename'
+if (require.main === module) {
+  seedInfo().then(() => process.exit(0)).catch(() => process.exit(1));
+}
+
+module.exports = { seedInfo };
