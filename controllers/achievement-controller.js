@@ -22,11 +22,11 @@ const addAchievement = async (req, res) => {
   try {
     // Check current number of experiences
     const count = await AchievementDB.countDocuments();
-    const maxNum = 4;
+    const maxAchievements = 4;
     
-    if (count >= maxNum) {
+    if (count >= maxAchievements) {
       return res.status(400).json({
-        message: `Cannot add more than ${maxNum} achievements.`,
+        message: `Cannot add more than ${maxAchievements} achievements.`,
       });
     }
 

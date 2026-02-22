@@ -18,6 +18,15 @@ const getExperiences = async (req, res) => {
 // =======================
 const addExperience = async (req, res) => {
   try {
+    const maxExperience = 8;
+    const count = await ExperienceDB.countDocuments();
+    
+    if (count >= maxExperience) {
+      return res.status(400).json({
+        message: `Cannot add more than ${maxExperience} experience.`,
+      });
+    }
+
     const { title, company, dateRange, details } = req.body;
 
     let img = undefined
