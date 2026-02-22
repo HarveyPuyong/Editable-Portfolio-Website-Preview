@@ -1,6 +1,6 @@
 
 import attachInputSanitizers from "./../utils/sanitize-input.js"
-import {loginUserAPI, sendOtpAPI, verifyOtpAPI, changePasswordAPI} from "./../api/auth-api.js";
+import {loginUserAPI, sendOtpAPI, verifyOtpAPI, changePasswordAPI, getDefaultCredentialsAPI} from "./../api/auth-api.js";
 import  {popupSuccess, popupError, closePopupAlert} from "./../utils/popup-alert.js";
 import otpCooldown from "./../utils/otp-cooldown.js"
 import {enableLoading, disableLoading} from "./../utils/loading-animation.js"
@@ -88,6 +88,31 @@ const handleLogin = () => {
   });
 }
 
+
+// ===============================
+// DISPLAY DEFAULT CREDENTIALS
+// ===============================
+const displayDefaultCredentials = async () => {
+  try {
+    const response = await getDefaultCredentialsAPI();
+    const {email, password} = response.data;
+
+    if(!email || !password) return
+
+    document.querySelector('#email-input').value = email;
+    document.querySelector('#password-input').value = password;
+
+  } catch (err) {
+    const errors = err.response?.data;
+
+    if (errors?.errors?.length) popupError(errors.errors.map(e => e.msg || e.message).join('\n'));
+    else if (errors?.message) popupError(errors.message);
+    else popupError("Failed to Login");
+    
+    console.error('Full error:', errors);
+    console.error(err);
+  }
+}
 
 // ===============================
 // HANDLE SEND OTP
@@ -272,12 +297,14 @@ const otpAutoNextPrevInput = () => {
 }
 
 
+
 export default function AuthMain(){
   validateEditPermissions();
   togglePasswordVisibility();
   otpAutoNextPrevInput();
   attachInputSanitizers();
   handleLogin();
+  displayDefaultCredentials();
   handleSendOTP();
   handleVerifyOTP();
   securedForgotPasswordForm();

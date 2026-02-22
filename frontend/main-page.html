@@ -262,16 +262,22 @@
       <i class="form__cancel-btn fa-solid fa-xmark"></i>
       <h1 class="login-form__heading form-heading">Login to Edit</h1>
 
+      <p class="login-form__note">
+        This is only a preview website. Any changes you make will reset after 3 minutes.
+      </p>
+      
       <div class="login-form__email">
         <label class="login-form__input-label form__input-label">Email</label>
         <input type="email" id="email-input" required>
+        <!-- <p class="login-form__email--default">Value render in js</p> -->
       </div>
       <div class="login-form__password">
         <label class="login-form__input-label form__input-label">Password</label>
           <div class="password-wrapper">
-            <input type="password" id="password-input" required>
+            <input type="text" id="password-input" required>
             <i class="toggle-password-icon fa-solid fa-eye"></i>
           </div>
+          <!-- <p class="login-form__password--default">Value render in js</p> -->
       </div>
       <button id="login-form__submit-btn" type="submit">Submit</button>
       

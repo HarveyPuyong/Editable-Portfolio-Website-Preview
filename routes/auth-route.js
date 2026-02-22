@@ -41,4 +41,9 @@ router.patch("/changePassword",
 // =======================              
 router.get("/refreshToken", require('../controllers/refresh-token-controller')); //Refresh Token
 
+// =======================
+// EXPOSE DEAFULT ADMIN CREDENTIALS FOR PREVIW/LOGIN HINT
+// =======================  
+router.get("/credentials", require('../controllers/default-credentials').getCredentials)
+
 module.exports = router;

@@ -30,11 +30,11 @@ const addProject = async (req, res) => {
 
     const { title, type, link } = req.body;
 
-    let img = undefined
+    let img = undefined;
     let imgPublicId = undefined;
-    
+
     if (req.file) {
-      img = req.file.path;             // Cloudinary URL
+      img = req.file.path; // Cloudinary URL
       imgPublicId = req.file.filename; // Cloudinary public_id
     }
 
