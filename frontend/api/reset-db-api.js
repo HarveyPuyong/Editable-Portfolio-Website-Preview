@@ -24,4 +24,16 @@ const getResetTimeAPI = async () => {
   }
 };
 
-export { setResetTimeAPI, getResetTimeAPI };
+/* ==========================================================================
+   REMOVE RESET TIME
+   ========================================================================== */
+const removeResetTimeAPI = async () => {
+  try {
+    const response = await api.patch("/reset-db/remove-reset-time");
+    if (response.status === 200) return response;
+  } catch (err) {
+    throw err;
+  }
+};
+
+export { setResetTimeAPI, getResetTimeAPI, removeResetTimeAPI };

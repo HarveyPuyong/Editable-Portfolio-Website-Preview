@@ -1,5 +1,8 @@
 const ResetModel = require("../models/reset-schema");
 
+// =======================
+// SET RESET TIME
+// =======================
 const setResetTime = async (req, res) => {
   try {
     const RESET_DELAY = Number(process.env.RESET_DELAY) || 1;
@@ -12,7 +15,7 @@ const setResetTime = async (req, res) => {
     await ResetModel.updateOne({}, { resetTime }, { upsert: true });
 
     return res.status(200).json({
-      message: `Reset scheduled in ${RESET_DELAY} minute(s)`,
+      message: `Reset scheduled set in ${RESET_DELAY} minute(s)`,
       resetTime,
       resetTimeReadable
     });
@@ -22,6 +25,9 @@ const setResetTime = async (req, res) => {
   }
 };
 
+// =======================
+// GET RESET TIME
+// =======================
 const getResetTime = async (req, res) => {
   try {
     const data = await ResetModel.findOne();
@@ -39,4 +45,25 @@ const getResetTime = async (req, res) => {
   }
 };
 
-module.exports = { setResetTime, getResetTime };
+// =======================
+// REMOVE RESET TIME
+// =======================
+const removeResetTime = async (req, res) => {
+  try {
+    const resetTime = null;
+    const resetTimeReadable = null;
+
+    await ResetModel.updateOne({}, { resetTime }, { upsert: true });
+
+    return res.status(200).json({
+      message: "The reset time has been removed",
+      resetTime,
+      resetTimeReadable
+    });
+  } catch (err) {
+    console.error("remove reset time error:", err);
+    return res.status(500).json({ message: "Failed to remove the reset time" });
+  }
+}
+
+module.exports = { setResetTime, getResetTime, removeResetTime };

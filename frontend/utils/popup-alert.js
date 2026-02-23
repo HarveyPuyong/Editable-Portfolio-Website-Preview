@@ -37,6 +37,8 @@ const closePopupAlert = (detail) => {
           otpInputs.forEach(inp => (inp.value = ''));
           otpInputs[0].focus();
       }
+
+      if(detail === "Content reset to default") window.location.reload();
       
     })
   });

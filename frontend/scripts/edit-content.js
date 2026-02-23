@@ -1,5 +1,6 @@
 import { popupError, popupSuccess } from "./../utils/popup-alert.js";
 import { enableLoading, disableLoading } from "./../utils/loading-animation.js";
+import {setResetTime, scheduleResetDatabase} from "./../utils/handle-reset-db.js"
 
 import { editMainInfoAPI, editMainEmailAPI } from "./../api/main-info-api.js";
 import { editAchievementAPI } from "./../api/achievement-api.js";
@@ -8,7 +9,7 @@ import { editExperiencesAPI } from "./../api/experience-api.js";
 import { editProjectAPI } from "./../api/project-api.js";
 import { editEducationAPI } from "./../api/education-api.js";
 import { editToolAPI } from "./../api/tool-api.js";
-import { setResetTimeAPI, getResetTimeAPI } from "./../api/reset-db-api.js";
+
 
 // ================================
 // TRACK DIRTY ELEMENT OF EDITED ELEMENT
@@ -422,57 +423,7 @@ export const editTool = async () => {
   }
 };
 
-// ==========================================
-// SET DATABASE RESET TIME
-// ==========================================
-const setResetTime = async () => {
-  try {
-    const response = await setResetTimeAPI();
-    if (response.status !== 200) throw new Error("Failed to fetch reset time");
 
-    const { resetTimeReadable } = response.data;
-
-    console.log(`Reset scheduled at ${resetTimeReadable}`);
-  } catch (err) {
-    console.error("Error scheduling auto-reload:", err);
-    popupError("Failed to schedule auto-reload for content reset.");
-  }
-};
-
-// ==========================================
-// SCHEDULE DATABASE RESET TIME
-// ==========================================
-// ==========================================
-// SCHEDULE DATABASE RESET TIME
-// ==========================================
-const scheduleResetTime = async () => {
-  try {
-    const response = await getResetTimeAPI();
-    const { resetTime, resetTimeReadable } = response.data;
-
-    if (!resetTime) {
-      console.log("No reset time found.");
-      return;
-    }
-
-    console.log(`Reset scheduled at: ${resetTimeReadable}`);
-
-    // Poll every second
-    const intervalId = setInterval(() => {
-      const now = Date.now();
-
-      // If current time >= resetTime, reload page
-      if (now >= resetTime) {
-        clearInterval(intervalId); // stop polling
-        console.log("Reset time reached. Reloading page...");
-        window.location.reload();
-      }
-    }, 1000);
-
-  } catch (err) {
-    console.error("Error scheduling auto-reload:", err);
-  }
-};
 
 // ==========================================
 // HANDLE SUBMIT FORM
@@ -513,5 +464,5 @@ export function EditContentMain() {
   imagePreview();
   popupAfterUploadingFile();
   handleSubmitForm();
-  scheduleResetTime();
+  scheduleResetDatabase();
 }
