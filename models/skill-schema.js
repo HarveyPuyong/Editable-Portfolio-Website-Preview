@@ -4,7 +4,7 @@ const skillSchema = new mongoose.Schema(
   {
     skillName: {
       type: String,
-      default: "",
+      default: "Enter Your Skill",
     },
   },
   {

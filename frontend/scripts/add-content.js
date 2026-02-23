@@ -27,10 +27,12 @@ const addSkill = async (e) => {
     addBtn.disabled = true;
 
     try {
+      const skillValue = ""
+
       await editMainInfo();
       await editSkill();
       await editAchievement();
-      await addSkillAPI({ skillName: undefined });
+      await addSkillAPI({ skillName: skillValue });
       await displayAboutSection();
 
     } catch (err) {
