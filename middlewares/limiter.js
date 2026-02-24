@@ -21,36 +21,36 @@ const loginLimiter = rateLimit({
 // =======================
 // Send OTP Limiter
 // =======================
-const sendOtpLimiter = rateLimit({
-  windowMs: 1 * 60 * 1000, // 1 minute
-  max: 3,
-  standardHeaders: true,
-  legacyHeaders: false,
-  handler: (req, res) => {
-    const resetTime = req.rateLimit.resetTime || (Date.now() + 60 * 1000);
-    const remaining = resetTime - Date.now();
-    res.status(429).json({
-      message: `Too many OTP requests. Please try again after ${timerFormatMs(remaining)}.`,
-    });
-  },
-});
+// const sendOtpLimiter = rateLimit({
+//   windowMs: 1 * 60 * 1000, // 1 minute
+//   max: 3,
+//   standardHeaders: true,
+//   legacyHeaders: false,
+//   handler: (req, res) => {
+//     const resetTime = req.rateLimit.resetTime || (Date.now() + 60 * 1000);
+//     const remaining = resetTime - Date.now();
+//     res.status(429).json({
+//       message: `Too many OTP requests. Please try again after ${timerFormatMs(remaining)}.`,
+//     });
+//   },
+// });
 
 // =======================
 // Verify OTP Limiter
 // =======================
-const verifyOtpLimiter = rateLimit({
-  windowMs: 5 * 60 * 1000, // 5 minutes
-  max: 5,
-  standardHeaders: true,
-  legacyHeaders: false,
-  handler: (req, res) => {
-    const resetTime = req.rateLimit.resetTime || (Date.now() + 5 * 60 * 1000);
-    const remaining = resetTime - Date.now();
-    res.status(429).json({
-      message: `Too many OTP verification attempts. Please try again after ${timerFormatMs(remaining)}.`,
-    });
-  },
-});
+// const verifyOtpLimiter = rateLimit({
+//   windowMs: 5 * 60 * 1000, // 5 minutes
+//   max: 5,
+//   standardHeaders: true,
+//   legacyHeaders: false,
+//   handler: (req, res) => {
+//     const resetTime = req.rateLimit.resetTime || (Date.now() + 5 * 60 * 1000);
+//     const remaining = resetTime - Date.now();
+//     res.status(429).json({
+//       message: `Too many OTP verification attempts. Please try again after ${timerFormatMs(remaining)}.`,
+//     });
+//   },
+// });
 
 // =======================
 // Contact Limiter
@@ -71,7 +71,7 @@ const contactLimiter = rateLimit({
 
 module.exports = {
   loginLimiter,
-  sendOtpLimiter,
-  verifyOtpLimiter,
   contactLimiter
+  // sendOtpLimiter,
+  // verifyOtpLimiter,
 };

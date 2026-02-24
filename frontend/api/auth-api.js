@@ -17,48 +17,48 @@ const loginUserAPI = async (credentials) => {
 /* ==========================================================================
    OTP SEND API
    ========================================================================== */
-const sendOtpAPI = async () => {
-  try {
-    const response = await api.post("/auth/sendOTP");
+// const sendOtpAPI = async () => {
+//   try {
+//     const response = await api.post("/auth/sendOTP");
 
-    if(response.status === 200) return response;
+//     if(response.status === 200) return response;
 
-  } catch (err) {
-    throw err
-    // const errorMessage = err.response.data.message;
-    // popupError(errorMessage);
-  }
-}
+//   } catch (err) {
+//     throw err
+//     // const errorMessage = err.response.data.message;
+//     // popupError(errorMessage);
+//   }
+// }
 
 /* ==========================================================================
    VERIFY OTP API
    ========================================================================== */
-const verifyOtpAPI = async (otp) => {
-  try {
-    const response = await api.post("/auth/verifyOTP", otp);
-    if(response.status === 200) return response
+// const verifyOtpAPI = async (otp) => {
+//   try {
+//     const response = await api.post("/auth/verifyOTP", otp);
+//     if(response.status === 200) return response
 
-  } catch (err) {
-    throw err
-  }
-}
+//   } catch (err) {
+//     throw err
+//   }
+// }
 
 /* ==========================================================================
    CHANGE PASSWORD API
    ========================================================================== */
-const changePasswordAPI = async (data, resetPasswordToken) => {
-   try {
-    const response = await api.patch("/auth/changePassword",
-                                     data,  
-                                    {headers: {"password-reset-token": resetPasswordToken}
-    });
+// const changePasswordAPI = async (data, resetPasswordToken) => {
+//    try {
+//     const response = await api.patch("/auth/changePassword",
+//                                      data,  
+//                                     {headers: {"password-reset-token": resetPasswordToken}
+//     });
 
-    if(response.status === 200) return response
+//     if(response.status === 200) return response
 
-  } catch (err) {
-    throw err
-  }
-}
+//   } catch (err) {
+//     throw err
+//   }
+// }
 
 /* ==========================================================================
    GET DEFAULT CREDENTIALS
@@ -73,4 +73,9 @@ const getDefaultCredentialsAPI = async() => {
   }
 }
 
-export {loginUserAPI, sendOtpAPI, verifyOtpAPI, changePasswordAPI, getDefaultCredentialsAPI}
+export {  loginUserAPI,
+          getDefaultCredentialsAPI
+          // sendOtpAPI,
+          // verifyOtpAPI, 
+          // changePasswordAPIchangePasswordAPI, 
+      }

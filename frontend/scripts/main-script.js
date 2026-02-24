@@ -4,6 +4,7 @@ import AddContentMain from "./add-content.js"
 import DeleteContentMain from "./delete-content.js"
 import {EditContentMain} from "./edit-content.js"
 import ContactFormEmailer from "./contact-emailer.js"
+import { popupError } from "../utils/popup-alert.js"
 
 
 // ================================
@@ -46,20 +47,21 @@ const toggleLoginForm = () => {
    TOGGLE OTP FORM
    ========================================================================== */
 const toggleOTPForm = () => {
-  const loginForm = document.querySelector('#login-form');
-  const OTPForm = document.querySelector('#otp-form');
+  // const loginForm = document.querySelector('#login-form');
+  // const OTPForm = document.querySelector('#otp-form');
 
   document.querySelector('.login-form__forgot-password').
     addEventListener('click', () => {
-      loginForm.classList.add('hide');
-      OTPForm.classList.remove('hide');
+      popupError('Password changes aren’t available in this preview mode.');
+      // loginForm.classList.add('hide');
+      // OTPForm.classList.remove('hide');
     });
 
-  document.querySelector('#otp-form .form__cancel-btn').
-    addEventListener('click', () => {
-      loginForm.classList.remove('hide');
-      OTPForm.classList.add('hide');
-    });
+  // document.querySelector('#otp-form .form__cancel-btn').
+  //   addEventListener('click', () => {
+  //     loginForm.classList.remove('hide');
+  //     OTPForm.classList.add('hide');
+  //   });
 }
 
 /* ==========================================================================
