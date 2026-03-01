@@ -1,8 +1,8 @@
 import api from "./../utils/axios-config.js";
 
-async function contactEmailerAPI (fromData) {
+async function contactEmailerAPI (formData) {
   try{
-    const response = await api.post("/contact", fromData);
+    const response = await api.post("/contact", formData);
     if (response.status === 200) return response.data;
 
   } catch (err){

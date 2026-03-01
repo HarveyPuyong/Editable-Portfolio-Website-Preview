@@ -23,8 +23,8 @@ function ContactFormEmailer() {
     }
 
     const formData = {
-      name: nameInput,
-      email: emailInput,
+      visitorName: nameInput,
+      visitorEmail: emailInput,
       message: messageInput
     };
 

@@ -4,14 +4,14 @@ const { contactFormEmailer } = require('../utils/emailer');
 // Contact form controller
 const sendContactForm = async (req, res) => {
   try {
-    const { name, email, message } = req.body;
+    const { visitorName, visitorEmail, message } = req.body;
 
     // Find User
     const user = await User.findOne();
     if (!user) return res.status(404).json({ message: "User not found" });
 
     // Send the email
-    await contactFormEmailer(name, email, message, user.email);
+    await contactFormEmailer(visitorName, visitorEmail, message, user.email);
 
     return res.status(200).json({ message: 'Message sent successfully!' });
 
