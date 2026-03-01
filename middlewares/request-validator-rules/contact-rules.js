@@ -8,7 +8,7 @@ const contactRules = [
     .escape(),
   body('visitorEmail')
     .isEmail()
-    .withMessage('Invalid email format')
+    .withMessage('Invalid email format'),
   body('message')
     .trim()
     .isLength({ min: 3, max: 10000 })
